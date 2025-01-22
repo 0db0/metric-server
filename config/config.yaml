@@ -1,0 +1,15 @@
+app:
+  name: "metric-server"
+  version: "0.0.1"
+
+http:
+  port: "8889"
+  read_timeout: "5s"
+  write_timeout: "5s"
+  shutdown_timeout: "3s"
+
+db:
+  pool_max: 2
+
+jwt:
+  secret: "0b701c1adb5bde05b7ea7ed54ee50833c91a1af0814e82151227281ff0a2ceeb"
