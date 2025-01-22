@@ -54,7 +54,7 @@ func (a MetricAdapter) buildDtoFromRequest(r *http.Request) (ValueDto, error) {
 	if err != nil {
 		return NewValueDto("", ""), err
 	}
-	a.log.Debug("Got dto", dto)
+
 	return dto, nil
 }
 

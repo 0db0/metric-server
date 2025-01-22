@@ -48,5 +48,9 @@ func (a MetricAdapter) buildCollectDto(r *http.Request) (CollectDto, error) {
 		return CollectDto{ID: name, MType: mType, Value: &value}, nil
 	}
 
+	if err := json.NewDecoder(r.Body).Decode(&metric); err != nil {
+		return CollectDto{}, err
+	}
+
 	return metric, nil
 }
