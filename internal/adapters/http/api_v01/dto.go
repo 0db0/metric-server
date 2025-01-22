@@ -1,9 +1,5 @@
 package api_v01
 
-import (
-	"strings"
-)
-
 type CollectDto struct {
 	ID    string   `json:"id"`
 	MType string   `json:"type"`
@@ -18,8 +14,8 @@ type ValueDto struct {
 
 func NewValueDto(id string, mType string) ValueDto {
 	return ValueDto{
-		ID:    strings.ToLower(id),
-		MType: strings.ToLower(mType),
+		ID:    id,
+		MType: mType,
 	}
 }
 

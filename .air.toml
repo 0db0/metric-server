@@ -3,7 +3,7 @@ tmp_dir = "tmp"
 
 [build]
 # Just plain old shell command. You could use `make` as well.
-#cmd = "go run -tags='no_mysql no_sqlite3 no_ydb no_clickhouse no_libsql no_vertica no_mssql' ./cmd/migrator && go build -gcflags='all=-N -l' -o ./app/api ./cmd/server"
+#cmd = "go run -tags='no_mysql no_sqlite3 no_ydb no_clickhouse no_libsql no_vertica no_mssql' ./cmd/migration_tool && go build -gcflags='all=-N -l' -o ./tmp/app ./cmd/server"
 cmd = "go build -gcflags='all=-N -l' -o ./tmp/app ./cmd/server"
 # Binary file yields from `cmd`.
 bin = "tmp/app"
