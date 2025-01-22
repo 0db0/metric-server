@@ -10,6 +10,3 @@ http:
 
 db:
   pool_max: 2
-
-jwt:
-  secret: "0b701c1adb5bde05b7ea7ed54ee50833c91a1af0814e82151227281ff0a2ceeb"
