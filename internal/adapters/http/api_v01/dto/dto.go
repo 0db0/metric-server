@@ -1,4 +1,4 @@
-package api_v01
+package dto
 
 type CollectDto struct {
 	ID    string   `json:"id"`

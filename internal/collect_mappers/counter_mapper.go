@@ -2,7 +2,7 @@ package collect_mappers
 
 import (
 	"context"
-	"metric-server/internal/adapters/http/api_v01"
+	"metric-server/internal/adapters/http/api_v01/dto"
 	"metric-server/internal/models"
 	"metric-server/internal/usecases"
 )
@@ -19,7 +19,7 @@ func NewCounterMapper(m usecases.Mapper, s usecases.Storage) CounterMapper {
 	}
 }
 
-func (c CounterMapper) ToMetricModel(ctx context.Context, dto api_v01.CollectDto) (models.Metric, error) {
+func (c CounterMapper) ToMetricModel(ctx context.Context, dto dto.CollectDto) (models.Metric, error) {
 	if dto.MType == models.TypeCounter {
 		model, err := c.s.FindByNameAndType(ctx, dto.ID, dto.MType)
 		if err != nil {
@@ -34,7 +34,7 @@ func (c CounterMapper) ToMetricModel(ctx context.Context, dto api_v01.CollectDto
 	return c.m.ToMetricModel(ctx, dto)
 }
 
-func (c CounterMapper) ToMetricModelList(ctx context.Context, dtoList []api_v01.CollectDto) ([]models.Metric, error) {
+func (c CounterMapper) ToMetricModelList(ctx context.Context, dtoList []dto.CollectDto) ([]models.Metric, error) {
 	filtered := c.filter(dtoList)
 	var metricList []models.Metric
 
@@ -59,8 +59,8 @@ func (c CounterMapper) ToMetricModelList(ctx context.Context, dtoList []api_v01.
 	return append(add, metricList...), nil
 }
 
-func (c CounterMapper) filter(dtoList []api_v01.CollectDto) []api_v01.CollectDto {
-	var filtered []api_v01.CollectDto
+func (c CounterMapper) filter(dtoList []dto.CollectDto) []dto.CollectDto {
+	var filtered []dto.CollectDto
 	for _, dto := range dtoList {
 		if dto.MType == models.TypeCounter {
 			filtered = append(filtered, dto)
@@ -70,7 +70,7 @@ func (c CounterMapper) filter(dtoList []api_v01.CollectDto) []api_v01.CollectDto
 	return filtered
 }
 
-func (c CounterMapper) toMetricModel(dto api_v01.CollectDto, mapCounter map[string]models.Metric) models.Metric {
+func (c CounterMapper) toMetricModel(dto dto.CollectDto, mapCounter map[string]models.Metric) models.Metric {
 	var delta *int64
 	m, ok := mapCounter[dto.ID]
 

@@ -7,6 +7,7 @@ import (
 	"metric-server/config"
 	"metric-server/internal/adapters/db/postgres"
 	"metric-server/internal/adapters/http/api_v01"
+	"metric-server/internal/adapters/http/api_v01/dto_builder"
 	"metric-server/internal/collect_mappers"
 	"metric-server/internal/pkg/logger"
 	"metric-server/internal/pkg/server"
@@ -26,7 +27,8 @@ func Run(cfg *config.Config) {
 
 	c := usecases.NewCollectUseCase(storage, chainedMapper)
 	g := usecases.NewGiveUseCase(storage)
-	v01 := api_v01.NewMetricAdapter(c, g, log)
+	rb := dto_builder.NewCounterBuilder(dto_builder.NewGaugeBuilder())
+	v01 := api_v01.NewMetricAdapter(c, g, rb, log)
 
 	r := router.New(v01)
 	s := server.New(r, cfg)

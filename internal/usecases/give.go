@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"context"
-	"metric-server/internal/adapters/http/api_v01"
+	"metric-server/internal/adapters/http/api_v01/dto"
 	"metric-server/internal/models"
 )
 
@@ -16,7 +16,7 @@ func NewGiveUseCase(s Storage) *GiveUseCase {
 	}
 }
 
-func (g GiveUseCase) GetValue(ctx context.Context, dto api_v01.ValueDto) (models.Metric, error) {
+func (g GiveUseCase) GetValue(ctx context.Context, dto dto.ValueDto) (models.Metric, error) {
 	metric, err := g.s.FindByNameAndType(ctx, dto.ID, dto.MType)
 
 	if err != nil {

@@ -3,25 +3,28 @@ package api_v01
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
+	"metric-server/internal/adapters/http/api_v01/dto"
 	"metric-server/internal/models"
 	"net/http"
+	"strings"
 )
 
 func (a MetricAdapter) GetMetric(w http.ResponseWriter, r *http.Request) {
-	dto, err := a.buildDtoFromRequest(r)
+	rDto, err := a.buildDtoFromRequest(r)
 	if err != nil {
 		a.log.Error("Error while building metric dto", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	metric, err := a.g.GetValue(r.Context(), dto)
+	metric, err := a.g.GetValue(r.Context(), rDto)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			w.WriteHeader(http.StatusNotFound)
+			return
 		}
+
 		a.log.Error("Error while getting metric", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -37,29 +40,34 @@ func (a MetricAdapter) GetMetric(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (a MetricAdapter) buildDtoFromRequest(r *http.Request) (ValueDto, error) {
+func (a MetricAdapter) buildDtoFromRequest(r *http.Request) (dto.ValueDto, error) {
 	if r.Method == http.MethodGet {
-		mType := chi.URLParam(r, "metric-type")
-		name := chi.URLParam(r, "metric-name")
-
-		if mType == "" || name == "" {
-			return NewValueDto("", ""), errors.New("metric type or metric name must be non empty")
+		paths := strings.Split(strings.TrimLeft(r.URL.Path, "/"), "/")
+		if len(paths) != 4 {
+			return dto.ValueDto{}, errors.New("invalid path")
 		}
 
-		return NewValueDto(name, mType), nil
+		mType := paths[len(paths)-2]
+		name := paths[len(paths)-1]
+
+		if mType == "" || name == "" {
+			return dto.NewValueDto("", ""), errors.New("metric type or metric name must be non empty")
+		}
+
+		return dto.NewValueDto(name, mType), nil
 	}
 
-	var dto ValueDto
-	err := json.NewDecoder(r.Body).Decode(&dto)
+	var valueDto dto.ValueDto
+	err := json.NewDecoder(r.Body).Decode(&valueDto)
 	if err != nil {
-		return NewValueDto("", ""), err
+		return dto.NewValueDto("", ""), err
 	}
 
-	return dto, nil
+	return valueDto, nil
 }
 
-func (a MetricAdapter) buildResponseDto(metric models.Metric) MetricResponseDto {
-	return MetricResponseDto{
+func (a MetricAdapter) buildResponseDto(metric models.Metric) dto.MetricResponseDto {
+	return dto.MetricResponseDto{
 		Name:  metric.Name,
 		Type:  metric.Type,
 		Delta: metric.GetDelta(),
