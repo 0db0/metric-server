@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"context"
-	"metric-server/internal/adapters/http/api_v01"
+	"metric-server/internal/adapters/http/api_v01/dto"
 	"metric-server/internal/models"
 )
 
@@ -14,8 +14,8 @@ type Storage interface {
 }
 
 type Mapper interface {
-	ToMetricModel(ctx context.Context, dto api_v01.CollectDto) (models.Metric, error)
-	ToMetricModelList(ctx context.Context, dto []api_v01.CollectDto) ([]models.Metric, error)
+	ToMetricModel(ctx context.Context, dto dto.CollectDto) (models.Metric, error)
+	ToMetricModelList(ctx context.Context, dto []dto.CollectDto) ([]models.Metric, error)
 }
 
 type CollectUseCase struct {
@@ -30,7 +30,7 @@ func NewCollectUseCase(s Storage, m Mapper) *CollectUseCase {
 	}
 }
 
-func (c CollectUseCase) CollectOne(ctx context.Context, dto api_v01.CollectDto) error {
+func (c CollectUseCase) CollectOne(ctx context.Context, dto dto.CollectDto) error {
 	model, err := c.m.ToMetricModel(ctx, dto)
 	if err != nil {
 		return err
@@ -39,7 +39,7 @@ func (c CollectUseCase) CollectOne(ctx context.Context, dto api_v01.CollectDto) 
 	return c.s.Save(ctx, model)
 }
 
-func (c CollectUseCase) CollectMany(ctx context.Context, metrics []api_v01.CollectDto) error {
+func (c CollectUseCase) CollectMany(ctx context.Context, metrics []dto.CollectDto) error {
 	metricModels, err := c.m.ToMetricModelList(ctx, metrics)
 	if err != nil {
 		return err
