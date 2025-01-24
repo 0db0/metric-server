@@ -1,0 +1,144 @@
+basePath: /v0.1
+definitions:
+  dto.CollectDto:
+    properties:
+      delta:
+        type: integer
+      id:
+        type: string
+      type:
+        type: string
+      value:
+        type: number
+    type: object
+host: localhost:8889
+info:
+  contact:
+    email: budkodmv@gmail.com
+    name: Metric Collector API Support
+    url: http://www.swagger.io/support
+  description: Metrics and Alerting Service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Metric Collector API
+  version: "0.1"
+paths:
+  /update:
+    post:
+      consumes:
+      - application/json
+      description: Inserts or updates the value of a metric specified by its type,
+        name, and value.
+      parameters:
+      - description: Object metric to insert or update
+        in: body
+        name: metrics
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CollectDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Metric value inserted or updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request. Invalid metric parameters or JSON payload
+          schema:
+            type: string
+      summary: Insert or update metric value
+  /update/{metricType}/{metricName}/{metricValue}:
+    post:
+      description: Inserts or updates the value of a metric specified by its type,
+        name, and value.
+      parameters:
+      - description: Type of the metric ('gauge' or 'counter')
+        in: path
+        name: metricType
+        required: true
+        type: string
+      - description: Name of the metric
+        in: path
+        name: metricName
+        required: true
+        type: string
+      - description: Value of the metric
+        in: path
+        name: metricValue
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Metric value inserted or updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request. Invalid metric parameters or JSON payload
+          schema:
+            type: string
+      summary: Insert or update metric value
+  /updates:
+    post:
+      consumes:
+      - application/json
+      description: Bulk inserts or updates metric values.
+      parameters:
+      - description: Array of metrics to insert or update
+        in: body
+        name: metrics
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/dto.CollectDto'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Metrics inserted or updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request. Invalid JSON payload or metric parameters
+          schema:
+            type: string
+      summary: Bulk insert or update metrics
+  /value/{metricType}/{metricName}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the value of a metric specified by its type and name.
+      parameters:
+      - description: Type of the metric ('gauge' or 'counter')
+        in: path
+        name: metricType
+        required: true
+        type: string
+      - description: Name of the metric
+        in: path
+        name: metricName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Metric value retrieved successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request. Either metric type is unsupported or value is
+            missing
+          schema:
+            type: string
+        "404":
+          description: Metric value not found
+          schema:
+            type: string
+      summary: Retrieve metric value by type and name
+swagger: "2.0"

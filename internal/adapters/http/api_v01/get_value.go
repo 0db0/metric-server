@@ -10,6 +10,17 @@ import (
 	"strings"
 )
 
+// GetMetric method return metric value by metric type and metric name
+// @Summary		Retrieve metric value by type and name
+// @Description	Retrieves the value of a metric specified by its type and name.
+// @Accept       json
+// @Produce      json
+// @Param			metricType	path		string	true	"Type of the metric ('gauge' or 'counter')"
+// @Param			metricName	path		string	true	"Name of the metric"
+// @Success		200			{string}	string	"Metric value retrieved successfully"
+// @Failure		400			{string}	string	"Bad request. Either metric type is unsupported or value is missing"
+// @Failure		404			{string}	string	"Metric value not found"
+// @Router			/value/{metricType}/{metricName} [get]
 func (a MetricAdapter) GetMetric(w http.ResponseWriter, r *http.Request) {
 	rDto, err := a.buildDtoFromRequest(r)
 	if err != nil {
