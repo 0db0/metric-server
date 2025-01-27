@@ -2,8 +2,8 @@ package contracts
 
 import (
 	"context"
-	"metric-server/internal/dto"
-	"metric-server/internal/models"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/models"
 )
 
 //go:generate mockgen -source=usecases.go -package=contracts -destination=../mocks/contracts/mock_usecases.go

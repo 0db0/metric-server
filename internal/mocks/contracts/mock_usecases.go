@@ -6,8 +6,8 @@ package contracts
 
 import (
 	context "context"
-	dto "metric-server/internal/dto"
-	models "metric-server/internal/models"
+	dto "github.com/0db0/metric-server/internal/dto"
+	models "github.com/0db0/metric-server/internal/models"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"

@@ -3,9 +3,9 @@ package api_v01
 import (
 	"database/sql"
 	"encoding/json"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/models"
 	"github.com/pkg/errors"
-	"metric-server/internal/dto"
-	"metric-server/internal/models"
 	"net/http"
 	"strings"
 )

@@ -1,9 +1,9 @@
 package api_v01
 
 import (
-	"metric-server/internal/contracts"
-	"metric-server/internal/dto"
-	"metric-server/internal/pkg/logger"
+	"github.com/0db0/metric-server/internal/contracts"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/pkg/logger"
 	"net/http"
 )
 

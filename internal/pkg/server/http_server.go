@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"metric-server/config"
+	"github.com/0db0/metric-server/config"
 	"net/http"
 	"time"
 )

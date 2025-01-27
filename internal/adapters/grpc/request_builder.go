@@ -1,8 +1,8 @@
 package grpc
 
 import (
-	"metric-server/internal/dto"
-	pb "metric-server/pkg/metric"
+	"github.com/0db0/metric-server/internal/dto"
+	pb "github.com/0db0/metric-server/pkg/metric"
 )
 
 func buildCollectDto(request *pb.CollectMetricRequest) dto.CollectDto {

@@ -2,10 +2,10 @@ package grpc
 
 import (
 	"context"
+	"github.com/0db0/metric-server/internal/contracts"
+	"github.com/0db0/metric-server/internal/pkg/logger"
+	pb "github.com/0db0/metric-server/pkg/metric"
 	"google.golang.org/protobuf/types/known/wrapperspb"
-	"metric-server/internal/contracts"
-	"metric-server/internal/pkg/logger"
-	pb "metric-server/pkg/metric"
 )
 
 type Adapter struct {

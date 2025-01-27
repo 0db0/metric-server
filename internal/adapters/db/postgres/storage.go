@@ -2,8 +2,8 @@ package postgres
 
 import (
 	"context"
+	"github.com/0db0/metric-server/internal/models"
 	"github.com/jmoiron/sqlx"
-	"metric-server/internal/models"
 )
 
 type Storage struct {

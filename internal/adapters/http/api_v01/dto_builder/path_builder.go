@@ -1,9 +1,9 @@
 package dto_builder
 
 import (
-	"metric-server/internal/adapters/http/api_v01"
-	"metric-server/internal/dto"
-	"metric-server/internal/models"
+	"github.com/0db0/metric-server/internal/adapters/http/api_v01"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/models"
 	"net/http"
 	"strconv"
 	"strings"

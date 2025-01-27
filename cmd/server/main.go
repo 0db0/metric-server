@@ -1,8 +1,8 @@
 package main
 
 import (
-	"metric-server/config"
-	"metric-server/internal/app"
+	"github.com/0db0/metric-server/config"
+	"github.com/0db0/metric-server/internal/app"
 )
 
 //	@title			Metric Collector API
