@@ -2,9 +2,9 @@ package collect_mappers
 
 import (
 	"context"
-	"metric-server/internal/dto"
-	"metric-server/internal/models"
-	"metric-server/internal/usecases"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/models"
+	"github.com/0db0/metric-server/internal/usecases"
 )
 
 type CounterMapper struct {

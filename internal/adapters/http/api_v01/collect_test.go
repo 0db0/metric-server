@@ -1,16 +1,16 @@
 package api_v01
 
 import (
+	"github.com/0db0/metric-server/internal/contracts"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/mocks/adapters/http/api_v01"
+	mock_usecases "github.com/0db0/metric-server/internal/mocks/contracts"
+	mock_logger "github.com/0db0/metric-server/internal/mocks/pkg/logger"
+	"github.com/0db0/metric-server/internal/pkg/logger"
 	"github.com/golang/mock/gomock"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"io"
-	"metric-server/internal/contracts"
-	"metric-server/internal/dto"
-	"metric-server/internal/mocks/adapters/http/api_v01"
-	mock_usecases "metric-server/internal/mocks/contracts"
-	mock_logger "metric-server/internal/mocks/pkg/logger"
-	"metric-server/internal/pkg/logger"
 	"net/http"
 	"net/http/httptest"
 	"strings"

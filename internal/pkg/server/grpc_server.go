@@ -1,10 +1,10 @@
 package server
 
 import (
+	"github.com/0db0/metric-server/config"
+	grpcAdapter "github.com/0db0/metric-server/internal/adapters/grpc"
+	"github.com/0db0/metric-server/pkg/metric"
 	"google.golang.org/grpc"
-	"metric-server/config"
-	grpcAdapter "metric-server/internal/adapters/grpc"
-	"metric-server/pkg/metric"
 	"net"
 )
 

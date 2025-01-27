@@ -2,8 +2,8 @@ package usecases
 
 import (
 	"context"
-	"metric-server/internal/dto"
-	"metric-server/internal/models"
+	"github.com/0db0/metric-server/internal/dto"
+	"github.com/0db0/metric-server/internal/models"
 )
 
 type Storage interface {

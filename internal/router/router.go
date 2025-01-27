@@ -1,11 +1,11 @@
 package router
 
 import (
+	"github.com/0db0/metric-server/internal/adapters/http/api_v01"
+	_ "github.com/0db0/metric-server/swagger"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
-	"metric-server/internal/adapters/http/api_v01"
-	_ "metric-server/swagger"
 )
 
 func New(v01 *api_v01.MetricAdapter) *chi.Mux {

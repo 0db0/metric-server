@@ -1,4 +1,4 @@
-module metric-server
+module github.com/0db0/metric-server
 
 go 1.23.4
 

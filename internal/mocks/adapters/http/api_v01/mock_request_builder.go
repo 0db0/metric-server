@@ -5,7 +5,7 @@
 package api_v01
 
 import (
-	dto "metric-server/internal/dto"
+	dto "github.com/0db0/metric-server/internal/dto"
 	http "net/http"
 	reflect "reflect"
 
