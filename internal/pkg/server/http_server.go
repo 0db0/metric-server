@@ -7,13 +7,13 @@ import (
 	"time"
 )
 
-type Server struct {
+type HTTPServer struct {
 	server          *http.Server
 	notify          chan error
 	shutdownTimeout time.Duration
 }
 
-func New(h http.Handler, cfg *config.Config) *Server {
+func NewHTTPServer(h http.Handler, cfg *config.Config) *HTTPServer {
 	httpServer := &http.Server{
 		Handler:      h,
 		Addr:         ":" + cfg.HTTP.Port,
@@ -21,25 +21,25 @@ func New(h http.Handler, cfg *config.Config) *Server {
 		WriteTimeout: cfg.HTTP.WriteTimeout,
 	}
 
-	return &Server{
+	return &HTTPServer{
 		server:          httpServer,
 		notify:          make(chan error, 1),
 		shutdownTimeout: cfg.HTTP.ShutdownTimeout,
 	}
 }
 
-func (s *Server) Start() {
+func (s *HTTPServer) Start() {
 	go func() {
 		s.notify <- s.server.ListenAndServe()
 		close(s.notify)
 	}()
 }
 
-func (s *Server) Notify() <-chan error {
+func (s *HTTPServer) Notify() <-chan error {
 	return s.notify
 }
 
-func (s *Server) Shutdown() error {
+func (s *HTTPServer) Shutdown() error {
 	ctx, cancel := context.WithTimeout(context.Background(), s.shutdownTimeout)
 	defer cancel()
 

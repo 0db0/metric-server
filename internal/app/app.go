@@ -6,6 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"metric-server/config"
 	"metric-server/internal/adapters/db/postgres"
+	"metric-server/internal/adapters/grpc"
 	"metric-server/internal/adapters/http/api_v01"
 	"metric-server/internal/adapters/http/api_v01/dto_builder"
 	"metric-server/internal/collect_mappers"
@@ -31,26 +32,34 @@ func Run(cfg *config.Config) {
 	v01 := api_v01.NewMetricAdapter(c, g, rb, log)
 
 	r := router.New(v01)
-	s := server.New(r, cfg)
-	s.Start()
-
+	httpServer := server.NewHTTPServer(r, cfg)
+	httpServer.Start()
 	log.Info("start HTTP server")
+
+	grpcAdapter := grpc.New(c, g, log)
+	gRPCServer := server.NewGRPCServer(grpcAdapter, *cfg)
+	gRPCServer.Start()
+	log.Info("start gRPC server")
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
 
 	select {
-	case s := <-interrupt:
-		log.Info(fmt.Sprintf("app interrupt by sygnal %s", s.String()))
-	case err := <-s.Notify():
+	case sig := <-interrupt:
+		log.Info(fmt.Sprintf("app interrupt by sygnal %s", sig.String()))
+	case err := <-httpServer.Notify():
 		log.Error(fmt.Errorf("http server stopped by %w", err))
+	case err := <-gRPCServer.Notify():
+		log.Error(fmt.Errorf("grpc server stopped by %w", err))
 	}
 
-	err := s.Shutdown()
+	err := httpServer.Shutdown()
 
 	if err != nil {
 		log.Error("error occurs while shutdown: %w", err)
 	}
+
+	gRPCServer.Shutdown()
 
 	exitCode := 0
 	defer func() {

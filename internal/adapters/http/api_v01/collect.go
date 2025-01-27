@@ -2,7 +2,7 @@ package api_v01
 
 import (
 	"encoding/json"
-	"metric-server/internal/adapters/http/api_v01/dto"
+	"metric-server/internal/dto"
 	"net/http"
 )
 

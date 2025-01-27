@@ -25,7 +25,6 @@ func New(v01 *api_v01.MetricAdapter) *chi.Mux {
 		// actual POST /update. POST /update/{metric-type/{metric-name}/{value} stay for backward compatibility
 		r.Post("/update/{metric-type}/{metric-name}/{value}", v01.CollectFromPath)
 		r.Post("/update", v01.Collect)
-
 		r.Post("/updates", v01.CollectMany)
 
 		r.Get("/swagger/*", httpSwagger.WrapHandler)

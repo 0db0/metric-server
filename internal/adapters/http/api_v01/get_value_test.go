@@ -6,7 +6,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"io"
-	mock_usecases "metric-server/internal/mocks/adapters/http/api_v01"
+	"metric-server/internal/contracts"
+	mock_usecases "metric-server/internal/mocks/contracts"
 	mock_logger "metric-server/internal/mocks/pkg/logger"
 	"metric-server/internal/models"
 	"metric-server/internal/pkg/logger"
@@ -23,8 +24,8 @@ func TestMetricAdapterGetMetric(t *testing.T) {
 		l *mock_logger.MockInterface
 	}
 	type fields struct {
-		c     CollectUseCase
-		g     GiveUseCase
+		c     contracts.CollectUseCase
+		g     contracts.GiveUseCase
 		log   logger.Interface
 		mocks *mocks
 	}

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"github.com/pkg/errors"
-	"metric-server/internal/adapters/http/api_v01/dto"
+	"metric-server/internal/dto"
 	"metric-server/internal/models"
 	"net/http"
 	"strings"

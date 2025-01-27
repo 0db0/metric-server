@@ -5,9 +5,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"io"
-	"metric-server/internal/adapters/http/api_v01/dto"
+	"metric-server/internal/contracts"
+	"metric-server/internal/dto"
 	"metric-server/internal/mocks/adapters/http/api_v01"
-	mock_usecases "metric-server/internal/mocks/adapters/http/api_v01"
+	mock_usecases "metric-server/internal/mocks/contracts"
 	mock_logger "metric-server/internal/mocks/pkg/logger"
 	"metric-server/internal/pkg/logger"
 	"net/http"
@@ -19,13 +20,13 @@ import (
 
 func TestMetricAdapter_Collect(t *testing.T) {
 	type mocks struct {
-		c  *api_v01.MockCollectUseCase
+		c  *mock_usecases.MockCollectUseCase
 		rb *api_v01.MockRequestDtoBuilder
 		l  *mock_logger.MockInterface
 	}
 	type fields struct {
-		c   CollectUseCase
-		g   GiveUseCase
+		c   contracts.CollectUseCase
+		g   contracts.GiveUseCase
 		rb  RequestDtoBuilder
 		log logger.Interface
 	}
@@ -45,7 +46,7 @@ func TestMetricAdapter_Collect(t *testing.T) {
 
 	cMock := mock_usecases.NewMockCollectUseCase(ctrl)
 	lMock := mock_logger.NewMockInterface(ctrl)
-	rbMock := mock_usecases.NewMockRequestDtoBuilder(ctrl)
+	rbMock := api_v01.NewMockRequestDtoBuilder(ctrl)
 	m := &mocks{
 		c:  cMock,
 		l:  lMock,
