@@ -1,37 +1,27 @@
 package api_v01
 
 import (
-	"context"
-	"metric-server/internal/adapters/http/api_v01/dto"
-	"metric-server/internal/models"
+	"metric-server/internal/contracts"
+	"metric-server/internal/dto"
 	"metric-server/internal/pkg/logger"
 	"net/http"
 )
 
-//go:generate mockgen -source=adapter.go -package=api_v01 -destination=../../../mocks/adapters/http/api_v01/mock_usecases.go
-type CollectUseCase interface {
-	CollectOne(ctx context.Context, metric dto.CollectDto) error
-	CollectMany(ctx context.Context, metrics []dto.CollectDto) error
-}
-
-type GiveUseCase interface {
-	GetValue(ctx context.Context, dto dto.ValueDto) (models.Metric, error)
-}
-
+//go:generate mockgen -source=adapter.go -package=api_v01 -destination=../../../mocks/adapters/http/api_v01/mock_request_builder.go
 type RequestDtoBuilder interface {
 	CreateCollectDto(r *http.Request) (dto.CollectDto, error)
 }
 
 type MetricAdapter struct {
-	c   CollectUseCase
-	g   GiveUseCase
+	c   contracts.CollectUseCase
+	g   contracts.GiveUseCase
 	rb  RequestDtoBuilder
 	log logger.Interface
 }
 
 func NewMetricAdapter(
-	c CollectUseCase,
-	g GiveUseCase,
+	c contracts.CollectUseCase,
+	g contracts.GiveUseCase,
 	rb RequestDtoBuilder,
 	log logger.Interface,
 ) *MetricAdapter {

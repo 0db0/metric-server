@@ -10,3 +10,6 @@ http:
 
 db:
   pool_max: 2
+
+grpc:
+  port: 3200

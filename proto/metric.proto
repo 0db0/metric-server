@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package metric;
+
+option go_package = "pkg/metric";
+
+message CollectMetricRequest {
+  string name = 1;
+  string type = 2;
+  google.protobuf.Int64Value delta = 3;
+  google.protobuf.DoubleValue value = 4;
+}
+
+message CollectMetricResponse {}
+
+message BatchCollectMetricRequest {
+  repeated CollectMetricRequest metrics = 1;
+}
+
+message BatchCollectMetricResponse {}
+
+message GetMetricRequest {
+  string name = 1;
+  string type = 2;
+}
+
+message GetMetricResponse {
+  string name = 1;
+  string type = 2;
+  google.protobuf.Int64Value delta = 3;
+  google.protobuf.DoubleValue value = 4;
+}
+
+service Metric {
+  rpc Collect(CollectMetricRequest) returns (CollectMetricResponse);
+  rpc BatchCollect(BatchCollectMetricRequest) returns (BatchCollectMetricResponse);
+  rpc GetMetric(GetMetricRequest) returns (GetMetricResponse);
+}

@@ -2,7 +2,7 @@ package collect_mappers
 
 import (
 	"context"
-	"metric-server/internal/adapters/http/api_v01/dto"
+	"metric-server/internal/dto"
 	"metric-server/internal/models"
 	"metric-server/internal/usecases"
 )

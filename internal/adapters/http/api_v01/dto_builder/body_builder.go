@@ -3,7 +3,7 @@ package dto_builder
 import (
 	"encoding/json"
 	"errors"
-	"metric-server/internal/adapters/http/api_v01/dto"
+	"metric-server/internal/dto"
 	"net/http"
 	"strings"
 )

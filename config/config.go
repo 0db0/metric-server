@@ -10,6 +10,7 @@ type (
 	Config struct {
 		App  App  `yaml:"app"`
 		HTTP HTTP `yaml:"http"`
+		GRPC GRPC `yaml:"grpc"`
 		DB   DB
 	}
 
@@ -28,6 +29,10 @@ type (
 	DB struct {
 		Dsn     string `env-required:"true" env:"DATABASE_DSN"`
 		PoolMax int    `yaml:"pool_max"`
+	}
+
+	GRPC struct {
+		Port string `env-required:"true" env:"GRPC_PORT" yaml:"port"`
 	}
 )
 
